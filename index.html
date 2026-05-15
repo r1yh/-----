@@ -25,45 +25,44 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         header {
-            background-color: var(--dark-orange);
+            background: linear-gradient(135deg, var(--dark-orange) 0%, #873600 100%);
             color: var(--white);
             padding: 4rem 1rem;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-            background-image: linear-gradient(135deg, var(--dark-orange) 0%, #873600 100%);
         }
 
         header h1 {
             margin: 0;
             font-family: 'Cairo', sans-serif;
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 8vw, 4rem); /* حجم خط متجاوب */
             font-weight: 900;
-            letter-spacing: -1px;
             color: var(--highlight-yellow);
             text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+            line-height: 1.2;
         }
 
         header p {
-            font-size: 1.4rem;
+            font-size: clamp(1.1rem, 4vw, 1.4rem);
             opacity: 0.95;
             margin-top: 10px;
             font-weight: 700;
-            color: var(--white);
         }
 
         .container {
             max-width: 1000px;
-            margin: -2rem auto 2rem auto;
+            margin: -2.5rem auto 2rem auto;
             padding: 0 1rem;
         }
 
         .tabs-nav {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 2.5rem;
             flex-wrap: wrap;
         }
@@ -72,13 +71,15 @@
             background-color: var(--white);
             border: none;
             color: var(--text-dark);
-            padding: 12px 25px;
+            padding: 12px 20px;
             cursor: pointer;
             font-weight: 700;
-            border-radius: 12px;
+            border-radius: 15px;
             transition: all 0.3s ease;
-            font-size: 1.1rem;
+            font-size: 1rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            flex: 1 1 calc(50% - 10px); /* زرين في الصف الواحد على الهواتف */
+            max-width: 200px;
         }
 
         .tab-button:hover {
@@ -95,11 +96,12 @@
 
         .unit-content {
             background: var(--white);
-            padding: 2.5rem;
-            border-radius: 20px;
+            padding: 2rem;
+            border-radius: 25px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.08);
             display: none;
-            min-height: 300px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .unit-content.active {
@@ -115,38 +117,45 @@
         .unit-title {
             color: var(--dark-orange);
             font-family: 'Cairo', sans-serif;
-            font-size: 1.8rem;
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
             border-right: 6px solid var(--primary-orange);
             padding-right: 15px;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
         }
 
-        .video-container {
+        /* حاوية الفيديو المتجاوبة للهاتف */
+        .video-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 56.25%;
-            background-color: #1a1a1a;
+            height: 0;
+            padding-bottom: 56.25%; /* نسبة 16:9 */
+            background-color: #000;
             border-radius: 15px;
-            margin: 1.5rem 0;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 1.5rem 0;
         }
 
-        .video-container iframe {
+        .video-wrapper iframe {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             border: none;
         }
 
         .empty-unit {
             text-align: center;
             color: var(--accent-gray);
-            padding: 4rem 0;
+            padding: 3rem 0;
+            font-weight: 700;
         }
 
         .actions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: 1fr;
             gap: 15px;
             margin-top: 2rem;
         }
@@ -155,18 +164,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 16px;
             text-decoration: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: 700;
             color: white;
             background-color: var(--primary-orange);
             transition: 0.3s;
+            font-size: 1.1rem;
         }
 
-        .action-btn:hover {
-            filter: brightness(1.1);
-            transform: scale(1.02);
+        .action-btn:active {
+            transform: scale(0.98);
         }
 
         footer {
@@ -176,10 +185,12 @@
             font-size: 0.9rem;
         }
 
-        @media (max-width: 600px) {
-            header h1 { font-size: 2.8rem; }
-            .tab-button { flex: 1 1 40%; padding: 10px; }
-            .unit-content { padding: 1.5rem; }
+        /* تحسينات للشاشات الصغيرة جداً */
+        @media (max-width: 400px) {
+            .tab-button {
+                flex: 1 1 100%;
+                max-width: none;
+            }
         }
     </style>
 </head>
@@ -201,39 +212,40 @@
     <!-- Unit 4 -->
     <div id="unit4" class="unit-content active">
         <h2 class="unit-title">الوحدة 4: حساب سرعة التفاعل ورتبة وعمر النصف</h2>
-        <div class="video-container">
-            <!-- فيديو الوحدة الرابعة الجديد -->
+        
+        <div class="video-wrapper">
+            <!-- تم استخدام رابط التضمين المتوافق مع GitHub ووضع حاوية متجاوبة -->
             <iframe 
                 src="https://drive.google.com/file/d/1sR3R0fGdjKcO3D-rrPdmquyh7jqGiihF/preview" 
+                allow="autoplay"
                 allowfullscreen>
             </iframe>
         </div>
+
         <div class="actions-grid">
-            <a href="https://drive.google.com/file/d/1IitN3h7lxkJeIdQp_760H1MSFxQQuWIZ/view?usp=sharing" target="_blank" class="action-btn">📁 تحميل الملخص</a>
+            <a href="https://drive.google.com/file/d/1IitN3h7lxkJeIdQp_760H1MSFxQQuWIZ/view?usp=sharing" target="_blank" class="action-btn">📁 تحميل ملخص الوحدة الرابعة</a>
         </div>
     </div>
 
-    <!-- Unit 5 -->
+    <!-- الوحدات الفارغة -->
     <div id="unit5" class="unit-content">
         <h2 class="unit-title">الوحدة 5</h2>
         <div class="empty-unit">
-            <p>قريباً سيتم إضافة محتوى الوحدة الخامسة...</p>
+            <p>سيتم إضافة المحتوى قريباً</p>
         </div>
     </div>
 
-    <!-- Unit 6 -->
     <div id="unit6" class="unit-content">
         <h2 class="unit-title">الوحدة 6</h2>
         <div class="empty-unit">
-            <p>قريباً سيتم إضافة محتوى الوحدة السادسة...</p>
+            <p>سيتم إضافة المحتوى قريباً</p>
         </div>
     </div>
 
-    <!-- Unit 7 -->
     <div id="unit7" class="unit-content">
         <h2 class="unit-title">الوحدة 7</h2>
         <div class="empty-unit">
-            <p>قريباً سيتم إضافة محتوى الوحدة السابعة...</p>
+            <p>سيتم إضافة المحتوى قريباً</p>
         </div>
     </div>
 </div>
@@ -254,6 +266,12 @@
         }
         document.getElementById(unitId).classList.add("active");
         evt.currentTarget.classList.add("active");
+        
+        // التمرير التلقائي لمحتوى الوحدة عند النقر (لتحسين تجربة الهاتف)
+        window.scrollTo({
+            top: document.querySelector('.tabs-nav').offsetTop - 20,
+            behavior: 'smooth'
+        });
     }
 </script>
 
