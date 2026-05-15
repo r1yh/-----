@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخلاصة في الكيمياء | الوحدات الدراسية</title>
+    <title>الخلاصة في الكيمياء | الأستاذ سلامة</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Tajawal:wght@400;700&display=swap');
+
         :root {
             --primary-orange: #d35400;
             --dark-orange: #a04000;
@@ -17,7 +19,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Tajawal', sans-serif;
             background-color: var(--light-bg);
             color: var(--text-dark);
             margin: 0;
@@ -28,108 +30,106 @@
         header {
             background-color: var(--dark-orange);
             color: var(--white);
-            padding: 3.5rem 1rem;
+            padding: 4rem 1rem;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            background-image: linear-gradient(135deg, var(--dark-orange) 0%, #873600 100%);
         }
 
         header h1 {
             margin: 0;
-            font-size: 3.5rem;
+            font-family: 'Cairo', sans-serif;
+            font-size: 4rem;
             font-weight: 900;
-            letter-spacing: -1.5px;
-            line-height: 1.2;
-        }
-
-        header h1 span.name {
+            letter-spacing: -1px;
             color: var(--highlight-yellow);
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
         }
 
         header p {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            margin-top: 15px;
+            font-size: 1.4rem;
+            opacity: 0.95;
+            margin-top: 10px;
             font-weight: 700;
+            color: var(--white);
         }
 
         .container {
             max-width: 1000px;
-            margin: 2rem auto;
+            margin: -2rem auto 2rem auto;
             padding: 0 1rem;
         }
 
         .tabs-nav {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 3rem;
+            gap: 12px;
+            margin-bottom: 2.5rem;
             flex-wrap: wrap;
         }
 
         .tab-button {
             background-color: var(--white);
-            border: 3px solid var(--primary-orange);
-            color: var(--primary-orange);
-            padding: 14px 35px;
+            border: none;
+            color: var(--text-dark);
+            padding: 12px 25px;
             cursor: pointer;
-            font-weight: 900;
-            border-radius: 50px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 1.2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-weight: 700;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .tab-button:hover {
+            transform: translateY(-3px);
             background-color: var(--primary-orange);
             color: var(--white);
-            transform: translateY(-4px);
-            box-shadow: 0 6px 15px rgba(211, 84, 0, 0.3);
         }
 
         .tab-button.active {
             background-color: var(--primary-orange);
             color: var(--white);
-            box-shadow: 0 8px 25px rgba(211, 84, 0, 0.45);
-            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(211, 84, 0, 0.4);
         }
 
         .unit-content {
             background: var(--white);
-            padding: 3rem;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
             display: none;
-            animation: slideUp 0.7s ease-out;
+            min-height: 300px;
         }
 
         .unit-content.active {
             display: block;
+            animation: fadeIn 0.5s ease;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .unit-title {
             color: var(--dark-orange);
-            border-right: 10px solid var(--primary-orange);
-            padding-right: 20px;
-            margin-bottom: 1.5rem;
-            font-size: 2.2rem;
-            font-weight: 900;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.8rem;
+            border-right: 6px solid var(--primary-orange);
+            padding-right: 15px;
+            margin-bottom: 2rem;
         }
 
         .video-container {
             position: relative;
             width: 100%;
             padding-top: 56.25%;
-            background-color: #000;
-            border-radius: 20px;
-            margin: 2rem 0;
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            margin: 1.5rem 0;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
         .video-container iframe {
@@ -138,52 +138,47 @@
             border: none;
         }
 
+        .empty-unit {
+            text-align: center;
+            color: var(--accent-gray);
+            padding: 4rem 0;
+        }
+
         .actions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 2rem;
         }
 
         .action-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 18px 25px;
+            padding: 15px;
             text-decoration: none;
-            border-radius: 15px;
-            font-weight: 900;
-            transition: all 0.3s;
-            text-align: center;
-            font-size: 1.1rem;
-            gap: 10px;
-        }
-
-        .btn-summary { background-color: var(--primary-orange); color: white; }
-        .btn-exam { background-color: #e67e22; color: white; }
-        .btn-solution { 
-            background-color: #d35400; 
-            border: 3px solid var(--highlight-yellow); 
-            color: white; 
+            border-radius: 10px;
+            font-weight: 700;
+            color: white;
+            background-color: var(--primary-orange);
+            transition: 0.3s;
         }
 
         .action-btn:hover {
-            filter: brightness(1.15);
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            filter: brightness(1.1);
+            transform: scale(1.02);
         }
 
         footer {
             text-align: center;
-            padding: 4rem 1rem;
+            padding: 3rem 1rem;
             color: var(--accent-gray);
-            font-weight: 700;
-            margin-top: 3rem;
+            font-size: 0.9rem;
         }
 
         @media (max-width: 600px) {
-            header h1 { font-size: 2.5rem; }
-            .tab-button { padding: 12px 20px; font-size: 1rem; flex: 1 1 45%; }
+            header h1 { font-size: 2.8rem; }
+            .tab-button { flex: 1 1 40%; padding: 10px; }
             .unit-content { padding: 1.5rem; }
         }
     </style>
@@ -191,8 +186,8 @@
 <body>
 
 <header>
-    <h1>الكيمياء مع <span class="name">سلامة</span></h1>
-    <p>طريقك المختصر للإبداع والتميز الدراسي</p>
+    <h1>الخلاصة في الكيمياء</h1>
+    <p>مع الأستاذ سلامة</p>
 </header>
 
 <div class="container">
@@ -205,63 +200,46 @@
 
     <!-- Unit 4 -->
     <div id="unit4" class="unit-content active">
-        <h2 class="unit-title">الوحدة 4: حسابات رتبه التفاعة و سرعةالتفاعل و عمر النصف </h2>
-        <p>شرح مفصل لمفاهيم الوحدة الرابعة مع ملف الملخص المرفق.</p>
+        <h2 class="unit-title">الوحدة 4: حساب سرعة التفاعل ورتبة وعمر النصف</h2>
         <div class="video-container">
-            <!-- فيديو الوحدة الرابعة -->
+            <!-- فيديو الوحدة الرابعة الجديد -->
             <iframe 
-                src="https://drive.google.com/file/d/1sR3R0fGdjKcO3D-rrPdmquyh7jqGiihF/view?usp=share_link" 
+                src="https://drive.google.com/file/d/1sR3R0fGdjKcO3D-rrPdmquyh7jqGiihF/preview" 
                 allowfullscreen>
             </iframe>
         </div>
         <div class="actions-grid">
-            <!-- تم تحديث رابط الملخص هنا -->
-            <a href="#">📁 تحميل الملخص</a>
-            <a href="#" class="action-btn btn-exam">📝 تحميل الاختبار</a>
-            <a href="#" class="action-btn btn-solution">✅ تحميل حل الاختبار</a>
+            <a href="https://drive.google.com/file/d/1IitN3h7lxkJeIdQp_760H1MSFxQQuWIZ/view?usp=sharing" target="_blank" class="action-btn">📁 تحميل الملخص</a>
         </div>
     </div>
 
-    <!-- الوحدات الأخرى -->
+    <!-- Unit 5 -->
     <div id="unit5" class="unit-content">
-        <h2 class="unit-title">الوحدة 5: </h2>
-        <div class="video-container">
-             <div style="color: white; padding: 50px; text-align: center;">[ فيديو الوحدة 5 ]</div>
-        </div>
-        <div class="actions-grid">
-            <a href="#" class="action-btn btn-summary">📁 تحميل الملخص</a>
-            <a href="#" class="action-btn btn-exam">📝 تحميل الاختبار</a>
-            <a href="#" class="action-btn btn-solution">✅ تحميل حل الاختبار</a>
+        <h2 class="unit-title">الوحدة 5</h2>
+        <div class="empty-unit">
+            <p>قريباً سيتم إضافة محتوى الوحدة الخامسة...</p>
         </div>
     </div>
 
+    <!-- Unit 6 -->
     <div id="unit6" class="unit-content">
-        <h2 class="unit-title">الوحدة 6: </h2>
-        <div class="video-container">
-             <div style="color: white; padding: 50px; text-align: center;">[ فيديو الوحدة 6 ]</div>
-        </div>
-        <div class="actions-grid">
-            <a href="#" class="action-btn btn-summary">📁 تحميل الملخص</a>
-            <a href="#" class="action-btn btn-exam">📝 تحميل الاختبار</a>
-            <a href="#" class="action-btn btn-solution">✅ تحميل حل الاختبار</a>
+        <h2 class="unit-title">الوحدة 6</h2>
+        <div class="empty-unit">
+            <p>قريباً سيتم إضافة محتوى الوحدة السادسة...</p>
         </div>
     </div>
 
+    <!-- Unit 7 -->
     <div id="unit7" class="unit-content">
-        <h2 class="unit-title">الوحدة 7: </h2>
-        <div class="video-container">
-             <div style="color: white; padding: 50px; text-align: center;">[ فيديو الوحدة 7 ]</div>
-        </div>
-        <div class="actions-grid">
-            <a href="#" class="action-btn btn-summary">📁 تحميل الملخص</a>
-            <a href="#" class="action-btn btn-exam">📝 تحميل الاختبار</a>
-            <a href="#" class="action-btn btn-solution">✅ تحميل حل الاختبار</a>
+        <h2 class="unit-title">الوحدة 7</h2>
+        <div class="empty-unit">
+            <p>قريباً سيتم إضافة محتوى الوحدة السابعة...</p>
         </div>
     </div>
 </div>
 
 <footer>
-    <p>© 2024 جميع الحقوق محفوظة | الكيمياء مع سلامة</p>
+    <p>© 2024 جميع الحقوق محفوظة | الخلاصة في الكيمياء</p>
 </footer>
 
 <script>
