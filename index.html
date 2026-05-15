@@ -3,7 +3,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>الخلاصة في الكيمياء | الأستاذ سلامة</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Tajawal:wght@400;700&display=swap');
@@ -16,6 +16,8 @@
             --white: #ffffff;
             --accent-gray: #7f8c8d;
             --highlight-yellow: #f1c40f;
+            --success-green: #27ae60;
+            --black-pure: #000000;
         }
 
         body {
@@ -25,13 +27,12 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         header {
             background: linear-gradient(135deg, var(--dark-orange) 0%, #873600 100%);
             color: var(--white);
-            padding: 4rem 1rem;
+            padding: 3rem 1rem;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.25);
         }
@@ -39,74 +40,52 @@
         header h1 {
             margin: 0;
             font-family: 'Cairo', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 4rem); /* حجم خط متجاوب */
+            font-size: clamp(2.2rem, 7vw, 3.8rem);
             font-weight: 900;
             color: var(--highlight-yellow);
             text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
-            line-height: 1.2;
         }
 
-        header p {
-            font-size: clamp(1.1rem, 4vw, 1.4rem);
-            opacity: 0.95;
-            margin-top: 10px;
-            font-weight: 700;
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            background: var(--text-dark);
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            gap: 15px;
+        }
+
+        .main-nav button {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .main-nav button.active-nav {
+            background: var(--primary-orange);
         }
 
         .container {
             max-width: 1000px;
-            margin: -2.5rem auto 2rem auto;
+            margin: 2rem auto;
             padding: 0 1rem;
         }
 
-        .tabs-nav {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-        }
-
-        .tab-button {
-            background-color: var(--white);
-            border: none;
-            color: var(--text-dark);
-            padding: 12px 20px;
-            cursor: pointer;
-            font-weight: 700;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            flex: 1 1 calc(50% - 10px); /* زرين في الصف الواحد على الهواتف */
-            max-width: 200px;
-        }
-
-        .tab-button:hover {
-            transform: translateY(-3px);
-            background-color: var(--primary-orange);
-            color: var(--white);
-        }
-
-        .tab-button.active {
-            background-color: var(--primary-orange);
-            color: var(--white);
-            box-shadow: 0 6px 20px rgba(211, 84, 0, 0.4);
-        }
-
-        .unit-content {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        .section-panel {
             display: none;
-            width: 100%;
-            box-sizing: border-box;
+            animation: fadeIn 0.4s ease-out;
         }
 
-        .unit-content.active {
+        .section-panel.active {
             display: block;
-            animation: fadeIn 0.5s ease;
         }
 
         @keyframes fadeIn {
@@ -114,83 +93,152 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .unit-title {
-            color: var(--dark-orange);
-            font-family: 'Cairo', sans-serif;
-            font-size: clamp(1.3rem, 5vw, 1.8rem);
-            border-right: 6px solid var(--primary-orange);
-            padding-right: 15px;
-            margin-bottom: 1.5rem;
-            line-height: 1.4;
+        /* --- الوحدات الدراسية --- */
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
-        /* حاوية الفيديو المتجاوبة للهاتف */
+        .tab-button {
+            background-color: var(--white);
+            border: none;
+            color: var(--text-dark);
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 700;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-family: 'Cairo', sans-serif;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .tab-button.active {
+            background-color: var(--primary-orange);
+            color: var(--white);
+        }
+
+        .tab-button-wide {
+            flex: 1 1 100% !important;
+            background-color: var(--text-dark);
+            color: var(--white);
+            border: 2px solid var(--highlight-yellow);
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .unit-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(211, 84, 0, 0.1);
+        }
+
         .video-wrapper {
             position: relative;
-            width: 100%;
+            padding-bottom: 56.25%;
             height: 0;
-            padding-bottom: 56.25%; /* نسبة 16:9 */
-            background-color: #000;
-            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin: 1.5rem 0;
+            border-radius: 18px;
+            background: #000;
+            margin-bottom: 1.5rem;
         }
 
         .video-wrapper iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
+            top: 0; left: 0; width: 100%; height: 100%; border: none;
         }
 
-        .empty-unit {
-            text-align: center;
-            color: var(--accent-gray);
-            padding: 3rem 0;
-            font-weight: 700;
-        }
-
-        .actions-grid {
+        .links-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            margin-top: 2rem;
         }
 
         .action-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
+            display: block;
+            padding: 15px;
+            text-align: center;
             text-decoration: none;
+            background-color: var(--primary-orange);
+            color: white;
             border-radius: 12px;
             font-weight: 700;
-            color: white;
-            background-color: var(--primary-orange);
             transition: 0.3s;
-            font-size: 1.1rem;
         }
 
-        .action-btn:active {
-            transform: scale(0.98);
+        .action-btn:hover { background-color: var(--dark-orange); transform: translateY(-2px); }
+
+        /* --- مركز الاختبارات --- */
+        .category-title {
+            color: var(--dark-orange);
+            font-family: 'Cairo';
+            border-right: 6px solid var(--primary-orange);
+            padding-right: 15px;
+            margin: 2.5rem 0 1.2rem;
         }
 
-        footer {
+        .exam-card {
+            background: var(--white);
+            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+            gap: 20px;
+        }
+
+        .exam-info { flex: 1; min-width: 250px; }
+        .exam-info h3 { margin: 0; font-family: 'Cairo'; font-size: 1.2rem; color: var(--text-dark); }
+        .exam-info p { margin: 8px 0 0; font-size: 0.95rem; color: var(--accent-gray); }
+
+        .exam-btns-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 180px;
+        }
+
+        .btn-start-green {
+            background-color: var(--success-green);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 800;
             text-align: center;
-            padding: 3rem 1rem;
-            color: var(--accent-gray);
-            font-size: 0.9rem;
+            transition: 0.3s;
         }
 
-        /* تحسينات للشاشات الصغيرة جداً */
-        @media (max-width: 400px) {
-            .tab-button {
-                flex: 1 1 100%;
-                max-width: none;
-            }
+        .btn-solve-black {
+            background-color: var(--black-pure);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: 0.3s;
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        footer { text-align: center; padding: 4rem 1rem; color: var(--accent-gray); font-weight: bold; }
+
+        @media (max-width: 600px) {
+            .exam-card { text-align: center; justify-content: center; }
+            .exam-btns-container { width: 100%; }
+            .btn-solve-black { width: 100%; margin: 0; box-sizing: border-box; }
         }
     </style>
 </head>
@@ -198,80 +246,141 @@
 
 <header>
     <h1>الخلاصة في الكيمياء</h1>
-    <p>مع الأستاذ سلامة</p>
+    <p>بإشراف الأستاذ سلامة</p>
 </header>
 
+<nav class="main-nav">
+    <button id="nav-units" class="active-nav" onclick="switchSection('units')">الوحدات الدراسية</button>
+    <button id="nav-exams" onclick="switchSection('exams')">مركز الاختبارات</button>
+</nav>
+
 <div class="container">
-    <div class="tabs-nav">
-        <button class="tab-button active" onclick="openUnit(event, 'unit4')">الوحدة 4</button>
-        <button class="tab-button" onclick="openUnit(event, 'unit5')">الوحدة 5</button>
-        <button class="tab-button" onclick="openUnit(event, 'unit6')">الوحدة 6</button>
-        <button class="tab-button" onclick="openUnit(event, 'unit7')">الوحدة 7</button>
-    </div>
-
-    <!-- Unit 4 -->
-    <div id="unit4" class="unit-content active">
-        <h2 class="unit-title">الوحدة 4: حساب سرعة التفاعل ورتبة وعمر النصف</h2>
-        
-        <div class="video-wrapper">
-            <!-- تم استخدام رابط التضمين المتوافق مع GitHub ووضع حاوية متجاوبة -->
-            <iframe 
-                src="https://drive.google.com/file/d/1sR3R0fGdjKcO3D-rrPdmquyh7jqGiihF/preview" 
-                allow="autoplay"
-                allowfullscreen>
-            </iframe>
+    
+    <!-- قسم الوحدات -->
+    <section id="section-units" class="section-panel active">
+        <div class="tabs-nav">
+            <button class="tab-button active" onclick="showUnit('u4', this)">الوحدة 4</button>
+            <button class="tab-button" onclick="showUnit('u5', this)">الوحدة 5</button>
+            <button class="tab-button" onclick="showUnit('u67', this)">الوحدة 6 و 7</button>
+            <button class="tab-button tab-button-wide" onclick="showUnit('revAll', this)">📝 مراجعة الوحدات الشاملة</button>
         </div>
 
-        <div class="actions-grid">
-            <a href="https://drive.google.com/file/d/1sR3R0fGdjKcO3D-rrPdmquyh7jqGiihF/preview" target="_blank" class="action-btn">📁 تحميل ملخص الوحدة الرابعة</a>
+        <div id="u4" class="unit-card unit-data">
+            <h2 style="color:var(--dark-orange); font-family:'Cairo';">الوحدة 4: سرعة التفاعل ورتبته</h2>
+            <div class="video-wrapper">
+                <iframe src="https://drive.google.com/file/d/1sR3R0fGdjKcO3D-rrPdmquyh7jqGiihF/preview"></iframe>
+            </div>
+            <div class="links-grid">
+                <a href="https://drive.google.com/file/d/1sR3R0fGdjKcO3D-rrPdmquyh7jqGiihF/view" target="_blank" class="action-btn">🎥 فيديو</a>
+                <a href="#" class="action-btn">📚 الملزمة</a>
+                <a href="#" class="action-btn">✅ حل الملزمة</a>
+            </div>
         </div>
-    </div>
 
-    <!-- الوحدات الفارغة -->
-    <div id="unit5" class="unit-content">
-        <h2 class="unit-title">الوحدة 5</h2>
-        <div class="empty-unit">
-            <p>سيتم إضافة المحتوى قريباً</p>
+        <div id="u5" class="unit-card unit-data" style="display:none;">
+            <h2 style="color:var(--dark-orange); font-family:'Cairo';">الوحدة 5: الاتزان والأحماض والقواعد</h2>
+            <div class="video-wrapper">
+                <iframe src="https://drive.google.com/file/d/10GQ3Ybjbuu3pD9WyxnVDCHW08CeXjQMt/preview"></iframe>
+            </div>
+            <div class="links-grid">
+                <a href="https://drive.google.com/file/d/10GQ3Ybjbuu3pD9WyxnVDCHW08CeXjQMt/view" target="_blank" class="action-btn">🎥 فيديو</a>
+                <a href="#" class="action-btn">📚 الملزمة</a>
+                <a href="#" class="action-btn">✅ حل الملزمة</a>
+            </div>
         </div>
-    </div>
 
-    <div id="unit6" class="unit-content">
-        <h2 class="unit-title">الوحدة 6</h2>
-        <div class="empty-unit">
-            <p>سيتم إضافة المحتوى قريباً</p>
+        <div id="u67" class="unit-card unit-data" style="display:none;">
+            <h2 style="color:var(--dark-orange); font-family:'Cairo';">الوحدة 6 و 7: الطاقة الحرارية والأنتروبي وجبس</h2>
+            <div class="video-wrapper">
+                <iframe src="https://drive.google.com/file/d/15eulQ0OeOSfaG-81cd8Flri0U5484auX/preview"></iframe>
+            </div>
+            <div class="links-grid">
+                <a href="https://drive.google.com/file/d/15eulQ0OeOSfaG-81cd8Flri0U5484auX/view" target="_blank" class="action-btn">🎥 فيديو</a>
+                <a href="https://drive.google.com/file/d/1p0l28lkq3m5GUwhVmgc5cKZCiB9ObFlh/view" target="_blank" class="action-btn">📚 الملزمة</a>
+                <a href="https://drive.google.com/file/d/1FZcS5kuep8SdeWsatfI32FizgyonvfbW/view" target="_blank" class="action-btn">✅ حل الملزمة</a>
+            </div>
         </div>
-    </div>
 
-    <div id="unit7" class="unit-content">
-        <h2 class="unit-title">الوحدة 7</h2>
-        <div class="empty-unit">
-            <p>سيتم إضافة المحتوى قريباً</p>
+        <div id="revAll" class="unit-card unit-data" style="display:none; border-top: 5px solid var(--highlight-yellow);">
+            <h2 style="color:var(--text-dark); font-family:'Cairo'; text-align: center;">📝 مراجعة الوحدات الشاملة</h2>
+            <div class="video-wrapper">
+                <iframe src="https://drive.google.com/file/d/18bR2bAM5Hp-C7MLoIvzbkH40AXj_oxzq/preview"></iframe>
+            </div>
+            <div class="links-grid" style="grid-template-columns: 1fr;">
+                <a href="https://drive.google.com/file/d/18bR2bAM5Hp-C7MLoIvzbkH40AXj_oxzq/view" target="_blank" class="action-btn" style="background-color: var(--text-dark);">🎥 فيديو</a>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <!-- قسم الاختبارات -->
+    <section id="section-exams" class="section-panel">
+        <h2 class="category-title">اختبارات متفرقة</h2>
+        <div class="exam-card">
+            <div class="exam-info"><h3>اختبار الوحدة 4</h3><p>سرعة التفاعل</p></div>
+            <div class="exam-btns-container">
+                <a href="#" class="btn-start-green">بدء الاختبار</a>
+                <a href="#" class="btn-solve-black">حل للاختبار</a>
+            </div>
+        </div>
+        <div class="exam-card">
+            <div class="exam-info"><h3>اختبار الوحدة 5</h3><p>الاتزان والأحماض</p></div>
+            <div class="exam-btns-container">
+                <a href="#" class="btn-start-green">بدء الاختبار</a>
+                <a href="#" class="btn-solve-black">حل للاختبار</a>
+            </div>
+        </div>
+        <div class="exam-card">
+            <div class="exam-info"><h3>اختبار الوحدة 6</h3><p>الطاقة الحرارية</p></div>
+            <div class="exam-btns-container">
+                <a href="https://drive.google.com/file/d/1ejbdx94u2CNHff-IBS79fkIvUCQ_NWrb/view" target="_blank" class="btn-start-green">بدء الاختبار</a>
+                <a href="https://drive.google.com/file/d/18Pgj6TrYg5WDLpZjhsk91nox59cVnOss/view" target="_blank" class="btn-solve-black">حل للاختبار</a>
+            </div>
+        </div>
+        <div class="exam-card">
+            <div class="exam-info"><h3>اختبار الوحدة 7</h3><p>الأنتروبي وطاقة جبس</p></div>
+            <div class="exam-btns-container">
+                <a href="https://drive.google.com/file/d/1guv8DXYtsHVRMMOFQT6-rxNtyGRdcoCF/view" target="_blank" class="btn-start-green">بدء الاختبار</a>
+                <a href="https://drive.google.com/file/d/1l0OpyuFpsR_Z_8f_wXVbstqer8B6cw1G/view" target="_blank" class="btn-solve-black">حل للاختبار</a>
+            </div>
+        </div>
+
+        <h2 class="category-title">الاختبارات الشاملة</h2>
+        <div class="exam-card" style="border-left: 8px solid var(--text-dark);">
+            <div class="exam-info"><h3>الاختبار التجريبي الشامل (1)</h3><p>محاكاة كاملة للاختبار النهائي</p></div>
+            <div class="exam-btns-container">
+                <!-- تم تغيير لون الخلفية هنا إلى اللون الأخضر المعتمد للاختبارات -->
+                <a href="#" class="btn-start-green">بدء الاختبار الشامل</a>
+                <a href="#" class="btn-solve-black">حل للاختبار</a>
+            </div>
+        </div>
+    </section>
 </div>
 
 <footer>
-    <p>© 2024 جميع الحقوق محفوظة | الخلاصة في الكيمياء</p>
+    <p>© 2024 جميع الحقوق محفوظة | منصة الخلاصة في الكيمياء</p>
 </footer>
 
 <script>
-    function openUnit(evt, unitId) {
-        var contents = document.getElementsByClassName("unit-content");
-        for (var i = 0; i < contents.length; i++) {
-            contents[i].classList.remove("active");
+    function switchSection(section) {
+        document.getElementById('section-units').classList.remove('active');
+        document.getElementById('section-exams').classList.remove('active');
+        document.getElementById('nav-units').classList.remove('active-nav');
+        document.getElementById('nav-exams').classList.remove('active-nav');
+        if(section === 'units') {
+            document.getElementById('section-units').classList.add('active');
+            document.getElementById('nav-units').classList.add('active-nav');
+        } else {
+            document.getElementById('section-exams').classList.add('active');
+            document.getElementById('nav-exams').classList.add('active-nav');
         }
-        var tabs = document.getElementsByClassName("tab-button");
-        for (var i = 0; i < tabs.length; i++) {
-            tabs[i].classList.remove("active");
-        }
-        document.getElementById(unitId).classList.add("active");
-        evt.currentTarget.classList.add("active");
-        
-        // التمرير التلقائي لمحتوى الوحدة عند النقر (لتحسين تجربة الهاتف)
-        window.scrollTo({
-            top: document.querySelector('.tabs-nav').offsetTop - 20,
-            behavior: 'smooth'
-        });
+        window.scrollTo(0,0);
+    }
+
+    function showUnit(unitId, btn) {
+        document.querySelectorAll('.unit-data').forEach(u => u.style.display = 'none');
+        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+        document.getElementById(unitId).style.display = 'block';
+        btn.classList.add('active');
     }
 </script>
 
